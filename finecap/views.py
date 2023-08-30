@@ -1,0 +1,47 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Reserva
+from .forms import ReservaForm
+
+# Create your views here.
+def index(request):
+    objetos = Reserva.objects.all()
+    context = {'objetos' : objetos}
+    return render(request, 'index.html', context)
+
+def reserva_editar(request, id = id):
+    reserva = get_object_or_404(Reserva, id = id)
+    if request.method == 'POST':
+        form = ReservaForm(request.POST,  request.FILES, instance = reserva)
+        if form.is_valid():
+            form.save()
+            return redirect('reserva_listar')
+    else:
+        form = ReservaForm(instance = reserva) #Evita a duplicação de informações, pois recebe como instância uma reserva que já existe
+    return render(request, 'formreserva.html', {'form' : form}) 
+
+def reserva_remover(request, id):
+    reserva = get_object_or_404(Reserva, id = id)
+    reserva.delete()
+    return redirect('reserva_listar') #Procure uma url com o nome 'reserva_listar'
+
+def reserva_criar(request):
+    if request.method == 'POST':
+        form = ReservaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('reserva_listar')
+        else:
+            print(form.errors)
+    else:
+        form = ReservaForm()
+    return render(request, 'formreserva.html', {'form': form})
+
+def reserva_listar(request):
+    reservas = Reserva.objects.all()
+    context = {'reservas' : reservas}
+    return render(request, 'reservas.html', context)
+
+def reserva_detalhar(request, id_reserva):
+    reserva = get_object_or_404(Reserva, id = id_reserva)
+    context={'reserva' : reserva}
+    return render(request, 'detalhe.html', context)
