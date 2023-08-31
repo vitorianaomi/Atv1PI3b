@@ -8,21 +8,10 @@ def index(request):
     context = {'objetos' : objetos}
     return render(request, 'index.html', context)
 
-def reserva_editar(request, id = id):
-    reserva = get_object_or_404(Reserva, id = id)
-    if request.method == 'POST':
-        form = ReservaForm(request.POST,  request.FILES, instance = reserva)
-        if form.is_valid():
-            form.save()
-            return redirect('reserva_listar')
-    else:
-        form = ReservaForm(instance = reserva) #Evita a duplicação de informações, pois recebe como instância uma reserva que já existe
-    return render(request, 'formreserva.html', {'form' : form}) 
-
 def reserva_remover(request, id):
-    reserva = get_object_or_404(Reserva, id = id)
+    reserva = get_object_or_404(Reserva, id=id)
     reserva.delete()
-    return redirect('reserva_listar') #Procure uma url com o nome 'reserva_listar'
+    return redirect('reserva_listar') 
 
 def reserva_criar(request):
     if request.method == 'POST':
@@ -41,7 +30,7 @@ def reserva_listar(request):
     context = {'reservas' : reservas}
     return render(request, 'reservas.html', context)
 
-def reserva_detalhar(request, id_reserva):
-    reserva = get_object_or_404(Reserva, id = id_reserva)
+def reserva_detalhar(request, id):
+    reserva = get_object_or_404(Reserva, id=id)
     context={'reserva' : reserva}
     return render(request, 'detalhe.html', context)

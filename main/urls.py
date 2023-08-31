@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from finecap.views import reserva_criar, index, reserva_listar, reserva_editar, reserva_remover, reserva_detalhar
+from finecap.views import reserva_criar, index, reserva_listar, reserva_remover, reserva_detalhar
 from django.conf.urls.static import static 
 from django.conf import settings
 
@@ -24,7 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name = 'index'),
     path('reserva/criar/', reserva_criar, name = 'reserva_criar'),
-    path('reserva/editar/<int:id>/', reserva_editar, name = 'reserva_editar'),
     path('reserva/remover/<int:id>/', reserva_remover, name = 'reserva_remover'),
     path('reserva/listar/', reserva_listar, name = 'reserva_listar'),
     path('reserva/<int:id>/', reserva_detalhar, name = 'reserva_detalhar'),
