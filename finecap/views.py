@@ -26,7 +26,7 @@ def reserva_criar(request):
     return render(request, 'formreserva.html', {'form': form})
 
 def reserva_listar(request):
-    reservas = Reserva.objects.all()
+    reservas = Reserva.objects.all().order_by('data')
     context = {'reservas' : reservas}
     return render(request, 'reservas.html', context)
 

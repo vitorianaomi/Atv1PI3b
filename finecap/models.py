@@ -15,7 +15,8 @@ class Reserva(models.Model):
     categoria_empresa = models.CharField(max_length = 100)
     quitado = models.BooleanField()
     img = models.ImageField(upload_to = 'imagens', verbose_name = 'imagem')
-    stand = models.OneToOneField(Stand, on_delete = models.SET_NULL, null = True)
+    stand = models.ForeignKey(Stand, on_delete = models.CASCADE)
+    data = models.DateField()
 
     def __str__(self):
         return self.cnpj
