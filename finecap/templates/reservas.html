@@ -3,6 +3,21 @@
 {% block center %}
 <h2>Lista de Produtos</h2>
 
+<div class="card-body mb-4 space">
+    <form method="GET" action="">
+        <label>Nome da empresa: </label>
+        <input type="text" name="nome_empresa" placeholder="Pesquisar">
+        <label>Valor do Stand: </label>
+        <input type="float" name="valor" placeholder="Pesquisar">
+        <label>Quitação </label>
+        <input type="checkbox" name="quitado" placeholder="Pesquisar">
+        <label>Data de reserva: </label>
+        <input type="date" name="data" placeholder="Pesquisar">
+
+        <input type="submit" value="Pesquisar" id="buttonSearch">
+    </form>
+</div>
+
 <a href="{% url 'reserva_criar' %}" class="btn btn-success mb-3">Nova reserva</a>
 
 <table class="table table-bordered">
@@ -20,11 +35,12 @@
             <td>{{ res.nome_empresa }}</td>
             <td>
                 <a href="{% url 'reserva_remover' id=res.id %}" class="btn btn-danger btn-sm">Remover</a>
-                <a href="{% url 'reserva_detalhar' id=res.id %}" class="btn btn-sm btn-outline-secondary">Ver Detalhes</a>
+                <a href="{% url 'reserva_detalhar' id=res.id %}" class="btn btn-sm btn-outline-secondary">Ver
+                    Detalhes</a>
             </td>
         </tr>
         {% endfor %}
-        
+
 
     </tbody>
 </table>
