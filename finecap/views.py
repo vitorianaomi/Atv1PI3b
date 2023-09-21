@@ -37,6 +37,8 @@ def reserva_listar(request):
             nome_empresa__contains=request.GET.get('nome_empresa'))
     if (request.GET.get('quitado')):
         reservas = reservas.filter(quitado=True)
+    if (request.GET.get('naoquitado')):
+        reservas = reservas.filter(quitado=False)
     if (request.GET.get('valor')):
         reservas = reservas.filter(stand__valor=request.GET.get('valor'))
     if (request.GET.get('data')):
