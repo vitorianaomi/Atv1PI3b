@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Reserva
 from .forms import ReservaForm
-from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -33,9 +32,6 @@ def reserva_criar(request):
 
 def reserva_listar(request):
     reservas = Reserva.objects.all().order_by('data')
-    paginator = Paginator(reservas, 2)
-    pagina = request.GET.get('pag')
-    pagina_obj = paginator.get_page(pagina)
     if (request.GET.get('nome_empresa')):
         reservas = reservas.filter(
             nome_empresa__contains=request.GET.get('nome_empresa'))
@@ -51,7 +47,7 @@ def reserva_listar(request):
     if (request.GET.get('data')):
         reservas = reservas.filter(data__date=request.GET.get('data'))
     context = {
-        'pagina_obj': pagina_obj
+        'reservas': reservas
     }
     return render(request, "reservas.html", context)
 
