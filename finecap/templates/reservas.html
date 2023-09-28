@@ -31,7 +31,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for res in reservas %}
+        {% for res in pag_obj %}
         <tr>
             <td>{{ res.cnpj }}</td>
             <td>{{ res.nome_empresa }}</td>
@@ -46,4 +46,21 @@
 
     </tbody>
 </table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if pag_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?pag={{ pag_obj.previous_page_number}}">Voltar</a></li>
+        {% endif %}
+
+
+        {% for page in pag_obj.paginator.page_range %}
+        <li class="page-item"><a class="page-link" href="?pag={{ page }}">{{ page }}</a></li>
+        {% endfor %}
+
+        {% if pag_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?pag={{ pag_obj.next_page_number}}">Próxima</a></li>
+        {% endif %}
+
+    </ul>
+    </nav>
 {% endblock %}
