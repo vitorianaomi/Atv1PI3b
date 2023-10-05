@@ -1,11 +1,13 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} 
 {% block center %}
-
-<form method="POST">
-    {% csrf_token %}
-    {{ login_form.as_p }}
-    <input type="submit" value="Login">
-</form>
+<div class="card mb-4 shadow-sm">
+  <br />
+  <h5 style="text-align: center">Fazer login</h5>
+  <hr />
+  <form style="text-align: center" method="POST">
+    {% csrf_token %} {{ login_form.as_p }}
+    <input type="submit" value="Login" />
+  </form>
+</div>
 
 {% endblock %}

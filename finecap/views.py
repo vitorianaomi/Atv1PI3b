@@ -5,7 +5,6 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-@login_required(login_url='/accounts/login')
 def reserva_detalhar(request, id):
     reserva = get_object_or_404(Reserva, id=id)
     context = {'reserva': reserva}
@@ -48,12 +47,9 @@ def reserva_criar(request):
     return render(request, 'formreserva.html', {'form': form})
 
 
-@login_required(login_url='/accounts/login')
 def reserva_listar(request):
     reservas = Reserva.objects.all().order_by('data')
-    paginator = Paginator(reservas, 5)
-    pagina = request.GET.get('pag')
-    pag_obj = paginator.get_page(pagina)
+    
     if (request.GET.get('nome_empresa')):
         reservas = reservas.filter(
             nome_empresa__contains=request.GET.get('nome_empresa'))
@@ -68,14 +64,16 @@ def reserva_listar(request):
         reservas = reservas.filter(stand__valor=request.GET.get('valor'))
     if (request.GET.get('data')):
         reservas = reservas.filter(data__date=request.GET.get('data'))
-        
+    
+    paginator = Paginator(reservas, 5)
+    pagina = request.GET.get('pag')
+    pag_obj = paginator.get_page(pagina)
     context = {
+        'reservas': reservas,
         'pag_obj': pag_obj
     }
     return render(request, "reservas.html", context)
-
-
-@login_required(login_url='/accounts/login')
+                  
 def index(request):
     objetos = Reserva.objects.count()
     context = {'objetos': objetos}
