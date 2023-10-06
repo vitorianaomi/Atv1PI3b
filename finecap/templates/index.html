@@ -3,6 +3,11 @@
 {% block center %}
 <h2 id='indextitle'>Reservas Finecap
 </h2>
+
+{% if user.is_authenticated %}
+    <span style="color: rgb(71, 65, 65); font-size: 20px;"><p>Logado como: {{ user.username }}</p></span>
+{% endif %}
+<hr> 
 <div class="container-fluid mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
